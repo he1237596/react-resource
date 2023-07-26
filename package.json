@@ -1,6 +1,6 @@
 {
   "private": false,
-  "name": "@he1237596/khooks",
+  "name": "@he1237596/utils",
   "version": "1.0.0",
   "scripts": {
     "start": "dumi dev",
