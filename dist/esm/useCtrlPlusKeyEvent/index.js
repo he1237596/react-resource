@@ -2,15 +2,15 @@
  * @Author: Chris
  * @Date: 2023-07-21 15:37:31
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-24 16:49:21
+ * @LastEditTime: 2023-07-27 11:05:19
  * @Descripttion: **
  */
 
 import React, { useEffect } from 'react';
-import emitter from "./keyEventEmitter";
-var useKeyboardEvent = function useKeyboardEvent(props) {
+import emitter from "../keyEventEmitter";
+var useCtrlCKeyListener = function useCtrlCKeyListener(props) {
   var _props$type = props.type,
-    type = _props$type === void 0 ? 'keydown' : _props$type,
+    type = _props$type === void 0 ? 'keyup' : _props$type,
     keyName = props.keyName,
     callback = props.callback,
     toolEventName = props.toolEventName,
@@ -25,8 +25,7 @@ var useKeyboardEvent = function useKeyboardEvent(props) {
     });
     var lastTime = 0;
     var handleKeyboardEvent = function handleKeyboardEvent(event) {
-      console.log(event);
-      if (event.key === keyName || event.keyCode === keyName) {
+      if (event.ctrlKey && (event.key === keyName || event.keyCode === keyName)) {
         // keydown 防抖
         if (delayType === 1) {
           if (timeoutId) {
@@ -59,8 +58,13 @@ var useKeyboardEvent = function useKeyboardEvent(props) {
         toolEventName: toolEventName
       });
       document.removeEventListener(type, handleKeyboardEvent);
-      clearTimeout(timeoutId);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
-  }, [keyName, callback, toolEventName, delayTime, delayType, type]);
+  }, [type, keyName, callback, toolEventName, delayTime, delayType]);
+  return {
+    emitter: emitter
+  };
 };
-export default useKeyboardEvent;
+export default useCtrlCKeyListener;

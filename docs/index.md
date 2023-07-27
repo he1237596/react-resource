@@ -1,6 +1,6 @@
 
-## react-utils
+## khooks
 
 ```
-这是一个react相关的工具包管理工具
+这是一个快捷键的hooks
 ```

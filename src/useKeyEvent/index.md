@@ -1,21 +1,5 @@
 <!--
  * @Author: Chris
- * @Date: 2023-07-26 10:44:03
- * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 15:19:31
- * @Descripttion: **
--->
-# @he1237596/khooks
-
-## Getting Started
-
-Install dependencies,
-
-```bash
-$ npm i @he1237596/khooks --save
-```
-<!--
- * @Author: Chris
  * @Date: 2023-07-26 18:00:46
  * @LastEditors: Chris
  * @LastEditTime: 2023-07-27 15:13:46

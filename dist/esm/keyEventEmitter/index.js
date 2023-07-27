@@ -6,19 +6,11 @@ function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _ty
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 /*
  * @Author: Chris
- * @Date: 2023-07-26 10:52:02
+ * @Date: 2023-07-26 18:00:10
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-26 10:52:04
+ * @LastEditTime: 2023-07-27 10:51:53
  * @Descripttion: **
  */
-/*
- * @Author: Chris
- * @Date: 2023-05-25 16:21:46
- * @LastEditors: Chris
- * @LastEditTime: 2023-07-24 16:59:02
- * @Descripttion: **
- */
-
 // class MapWithHistory extends Map {
 //   history = []
 //   set(key, val) {
@@ -62,7 +54,11 @@ var EventEmitter = /*#__PURE__*/function () {
     value: function publish(keyName, callbackInfo) {
       debug && console.log("\u53D1\u5E03\u6309\u952E".concat(keyName, "_").concat(callbackInfo.toolEventName, "\u4E8B\u4EF6"));
       // console.log(this.events.history.at(-1))
-      if (!this.freeze && this.events.has(keyName)) {
+      if (this.freeze) {
+        console.log("\u5DF2\u6682\u65F6\u51BB\u7ED3\u6240\u6709\u4E8B\u4EF6\u961F\u5217");
+        return;
+      }
+      if (this.events.has(keyName)) {
         var eventQueue = this.events.get(keyName);
         debug && console.log("\u67E5\u8BE2\u76EE\u6807\u6309\u952E".concat(keyName, "\u7684\u4E8B\u4EF6\u961F\u5217\u4FE1\u606F: "), eventQueue);
         // eventQueue.forEach(callback => callback(...args))
