@@ -2,7 +2,7 @@
  * @Author: Chris
  * @Date: 2023-07-26 18:00:46
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 15:13:46
+ * @LastEditTime: 2023-07-27 17:38:57
  * @Descripttion: **
 -->
 ## useKeyEvent
@@ -81,21 +81,30 @@ export default () => {
   </div>
 };
 ```
-<!--
+
 设置快捷键d修改useState定义的num数据（3）:
 - 使用useRef确保回调函数引用地址不变
 ```jsx
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useKeyEvent } from '@he1237596/khooks';
 
 export default () => {
   const [num, setNum] = useState(0)
   const [num2, setNum2] = useState(0)
   const ref = useRef(null)
-  const change = () => {
-    setNum(num2 - 1)
+  useEffect(() => {
+    setTimeout(() => {
+      setNum(100)
+    },500)
+  }, [])
+  const change = (a, e) => {
+    console.log(a, e)
+    setNum(a - 1)
   }
-  useKeyEvent({keyName: 'd', callback: change, toolEventName: 'reduce'})
+  // const change = useCallback(() => {
+  //   setNum(num -1)
+  // }, [num])
+  useKeyEvent({keyName: 'd', callback: (e)=>change(num, e), toolEventName: 'reduce'})
 
   return <div>
 按下键盘d键修改num
@@ -104,7 +113,7 @@ export default () => {
     </div>
   </div>
 };
-``` -->
+```
 
 freezeAll/unfreezeAll：冻结/解冻所有键盘事件队列
 ```jsx

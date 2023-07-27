@@ -2,15 +2,17 @@
  * @Author: Chris
  * @Date: 2023-07-21 15:37:31
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 15:13:30
+ * @LastEditTime: 2023-07-27 18:09:11
  * @Descripttion: **
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import emitter from '../keyEventEmitter';
 
 const useKeyboardEvent = (props) => {
   const { type = 'keyup', keyName, callback, toolEventName, delayTime = 300, delayType = 2 } = props;
+  const ref = useRef(callback)
+  ref.current = callback;
   useEffect(() => {
     let timeoutId = null;
     emitter.unsubscribe(keyName, {
@@ -39,7 +41,9 @@ const useKeyboardEvent = (props) => {
     document.removeEventListener(type, handleKeyboardEvent);
     emitter.subscribe(keyName, {
       toolEventName,
-      callback,
+      callback: (...args) => {
+        ref.current(...args)
+      },
     });
     document.addEventListener(type, handleKeyboardEvent);
     return () => {
@@ -49,7 +53,7 @@ const useKeyboardEvent = (props) => {
       document.removeEventListener(type, handleKeyboardEvent);
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [keyName, callback, toolEventName, delayTime, delayType, type]);
+  }, [keyName, toolEventName, delayTime, delayType, type]);
   return { emitter };
 };
 

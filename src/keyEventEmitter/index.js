@@ -2,7 +2,7 @@
  * @Author: Chris
  * @Date: 2023-07-26 18:00:10
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 10:51:53
+ * @LastEditTime: 2023-07-27 17:47:15
  * @Descripttion: **
  */
 // class MapWithHistory extends Map {
@@ -13,7 +13,7 @@
 //   }
 // }
 
-const debug = true;
+const debug = process.env.NODE_ENV;
 class EventEmitter {
   constructor() {
     this.events = new Map(); // 用于存储事件和对应的回调函数队列
@@ -39,6 +39,7 @@ class EventEmitter {
   }
 
   // 发布事件
+  // args目前里边只有键盘事件对象e
   publish(keyName, callbackInfo, ...args) {
     debug && console.log(`发布按键${keyName}_${callbackInfo.toolEventName}事件`)
     // console.log(this.events.history.at(-1))

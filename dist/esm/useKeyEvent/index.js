@@ -2,11 +2,11 @@
  * @Author: Chris
  * @Date: 2023-07-21 15:37:31
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 15:13:30
+ * @LastEditTime: 2023-07-27 17:16:53
  * @Descripttion: **
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import emitter from "../keyEventEmitter";
 var useKeyboardEvent = function useKeyboardEvent(props) {
   var _props$type = props.type,
@@ -18,6 +18,8 @@ var useKeyboardEvent = function useKeyboardEvent(props) {
     delayTime = _props$delayTime === void 0 ? 300 : _props$delayTime,
     _props$delayType = props.delayType,
     delayType = _props$delayType === void 0 ? 2 : _props$delayType;
+  var ref = useRef(callback);
+  ref.current = callback;
   useEffect(function () {
     var timeoutId = null;
     emitter.unsubscribe(keyName, {
@@ -50,7 +52,9 @@ var useKeyboardEvent = function useKeyboardEvent(props) {
     document.removeEventListener(type, handleKeyboardEvent);
     emitter.subscribe(keyName, {
       toolEventName: toolEventName,
-      callback: callback
+      callback: function callback() {
+        return ref.current.apply(ref, arguments);
+      }
     });
     document.addEventListener(type, handleKeyboardEvent);
     return function () {
@@ -60,7 +64,7 @@ var useKeyboardEvent = function useKeyboardEvent(props) {
       document.removeEventListener(type, handleKeyboardEvent);
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [keyName, callback, toolEventName, delayTime, delayType, type]);
+  }, [keyName, toolEventName, delayTime, delayType, type]);
   return {
     emitter: emitter
   };

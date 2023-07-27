@@ -6,5 +6,5 @@
  * @Descripttion: **
  */
 export { default as useKeyEvent } from './useKeyEvent';
-export { default as useKeyEvent } from './useKeyEvent';
+export { default as keyEventEmitter } from './keyEventEmitter';
 export { default as useCtrlPlusKeyEvent } from './useCtrlPlusKeyEvent';

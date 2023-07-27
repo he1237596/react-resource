@@ -8,7 +8,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
  * @Author: Chris
  * @Date: 2023-07-26 18:00:10
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 10:51:53
+ * @LastEditTime: 2023-07-27 15:32:18
  * @Descripttion: **
  */
 // class MapWithHistory extends Map {
@@ -19,7 +19,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 //   }
 // }
 
-var debug = true;
+var debug = process.env.NODE_ENV;
 var EventEmitter = /*#__PURE__*/function () {
   function EventEmitter() {
     _classCallCheck(this, EventEmitter);
