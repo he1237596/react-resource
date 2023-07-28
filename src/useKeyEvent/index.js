@@ -2,7 +2,7 @@
  * @Author: Chris
  * @Date: 2023-07-21 15:37:31
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 18:09:11
+ * @LastEditTime: 2023-07-28 15:43:44
  * @Descripttion: **
  */
 
@@ -20,6 +20,10 @@ const useKeyboardEvent = (props) => {
     });
     let lastTime = 0;
     const handleKeyboardEvent = (event) => {
+      // 聚焦输入框时，阻止快捷键
+      if (event.target.localName === 'input') {
+        return;
+      }
       if (event.key === keyName || event.keyCode === keyName) {
         // keydown 防抖
         if (delayType === 1) {

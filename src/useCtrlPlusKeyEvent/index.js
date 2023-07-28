@@ -2,7 +2,7 @@
  * @Author: Chris
  * @Date: 2023-07-21 15:37:31
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 11:05:19
+ * @LastEditTime: 2023-07-28 15:46:25
  * @Descripttion: **
  */
 
@@ -18,6 +18,9 @@ const useCtrlCKeyListener = (props) => {
     });
     let lastTime = 0;
     const handleKeyboardEvent = (event) => {
+      if (event.target.localName === 'input') {
+        return;
+      }
       if (event.ctrlKey && (event.key === keyName || event.keyCode === keyName)) {
         // keydown 防抖
         if (delayType === 1) {
