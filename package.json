@@ -1,7 +1,8 @@
 {
   "private": false,
   "name": "@he1237596/khooks",
-  "version": "1.0.4",
+  "description": "This is a custom hook based on React keyboard events, integrating event queue management solutions",
+  "version": "1.0.5",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",

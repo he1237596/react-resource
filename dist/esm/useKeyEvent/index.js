@@ -1,11 +1,3 @@
-/*
- * @Author: Chris
- * @Date: 2023-07-21 15:37:31
- * @LastEditors: Chris
- * @LastEditTime: 2023-07-28 15:43:44
- * @Descripttion: **
- */
-
 import React, { useEffect, useRef } from 'react';
 import emitter from "../keyEventEmitter";
 var useKeyboardEvent = function useKeyboardEvent(props) {

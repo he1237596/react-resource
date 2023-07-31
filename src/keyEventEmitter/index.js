@@ -1,10 +1,3 @@
-/*
- * @Author: Chris
- * @Date: 2023-07-26 18:00:10
- * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 17:47:15
- * @Descripttion: **
- */
 // class MapWithHistory extends Map {
 //   history = []
 //   set(key, val) {
@@ -39,8 +32,8 @@ class EventEmitter {
   }
 
   // 发布事件
-  // args目前里边只有键盘事件对象e
-  publish(keyName, callbackInfo, ...args) {
+  // args目前来说是空的 todo：留待后面看是否需要扩展
+  publish(keyName, callbackInfo, e, ...args) {
     debug && console.log(`发布按键${keyName}_${callbackInfo.toolEventName}事件`)
     // console.log(this.events.history.at(-1))
     if (this.freeze) {
@@ -54,7 +47,7 @@ class EventEmitter {
       if (eventQueue.length > 0) {
         const eventQueueItem = eventQueue[eventQueue.length - 1];
         if (eventQueueItem && eventQueueItem.toolEventName === callbackInfo.toolEventName) {
-          eventQueueItem.callback(...args)
+          eventQueueItem.callback(e, ...args)
           debug && console.log(`真实执行按键${keyName}_${eventQueueItem.toolEventName}事件`)
         }
       } else {

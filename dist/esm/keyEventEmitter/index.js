@@ -4,13 +4,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-/*
- * @Author: Chris
- * @Date: 2023-07-26 18:00:10
- * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 17:47:15
- * @Descripttion: **
- */
 // class MapWithHistory extends Map {
 //   history = []
 //   set(key, val) {
@@ -49,10 +42,10 @@ var EventEmitter = /*#__PURE__*/function () {
     }
 
     // 发布事件
-    // args目前里边只有键盘事件对象e
+    // args目前来说是空的 todo：留待后面看是否需要扩展
   }, {
     key: "publish",
-    value: function publish(keyName, callbackInfo) {
+    value: function publish(keyName, callbackInfo, e) {
       debug && console.log("\u53D1\u5E03\u6309\u952E".concat(keyName, "_").concat(callbackInfo.toolEventName, "\u4E8B\u4EF6"));
       // console.log(this.events.history.at(-1))
       if (this.freeze) {
@@ -66,10 +59,10 @@ var EventEmitter = /*#__PURE__*/function () {
         if (eventQueue.length > 0) {
           var eventQueueItem = eventQueue[eventQueue.length - 1];
           if (eventQueueItem && eventQueueItem.toolEventName === callbackInfo.toolEventName) {
-            for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-              args[_key - 2] = arguments[_key];
+            for (var _len = arguments.length, args = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+              args[_key - 3] = arguments[_key];
             }
-            eventQueueItem.callback.apply(eventQueueItem, args);
+            eventQueueItem.callback.apply(eventQueueItem, [e].concat(args));
             debug && console.log("\u771F\u5B9E\u6267\u884C\u6309\u952E".concat(keyName, "_").concat(eventQueueItem.toolEventName, "\u4E8B\u4EF6"));
           }
         } else {
