@@ -8,7 +8,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
  * @Author: Chris
  * @Date: 2023-07-26 18:00:10
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 15:32:18
+ * @LastEditTime: 2023-07-27 17:47:15
  * @Descripttion: **
  */
 // class MapWithHistory extends Map {
@@ -49,6 +49,7 @@ var EventEmitter = /*#__PURE__*/function () {
     }
 
     // 发布事件
+    // args目前里边只有键盘事件对象e
   }, {
     key: "publish",
     value: function publish(keyName, callbackInfo) {

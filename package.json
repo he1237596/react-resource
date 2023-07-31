@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@he1237596/khooks",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",

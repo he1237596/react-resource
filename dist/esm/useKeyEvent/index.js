@@ -2,7 +2,7 @@
  * @Author: Chris
  * @Date: 2023-07-21 15:37:31
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-27 17:16:53
+ * @LastEditTime: 2023-07-28 15:43:44
  * @Descripttion: **
  */
 
@@ -27,6 +27,10 @@ var useKeyboardEvent = function useKeyboardEvent(props) {
     });
     var lastTime = 0;
     var handleKeyboardEvent = function handleKeyboardEvent(event) {
+      // 聚焦输入框时，阻止快捷键
+      if (event.target.localName === 'input') {
+        return;
+      }
       if (event.key === keyName || event.keyCode === keyName) {
         // keydown 防抖
         if (delayType === 1) {
@@ -53,7 +57,7 @@ var useKeyboardEvent = function useKeyboardEvent(props) {
     emitter.subscribe(keyName, {
       toolEventName: toolEventName,
       callback: function callback() {
-        return ref.current.apply(ref, arguments);
+        ref.current.apply(ref, arguments);
       }
     });
     document.addEventListener(type, handleKeyboardEvent);
