@@ -2,7 +2,7 @@
  * @Author: Chris
  * @Date: 2023-07-31 11:35:57
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-31 15:48:26
+ * @LastEditTime: 2023-08-02 15:19:39
  * @Descripttion: **
 -->
 
@@ -14,7 +14,7 @@
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useCtrlPlusKeyEvent } from 'react-keyhooks';
+import { useCtrlPlusKeyEvent } from 'keyhooks';
 
 export default () => {
   const [num, setNum] = useState(0);

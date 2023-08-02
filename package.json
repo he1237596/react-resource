@@ -1,6 +1,6 @@
 {
   "private": false,
-  "name": "react-keyhooks",
+  "name": "keyhooks",
   "description": "This is a custom hook based on React keyboard events, integrating event queue management solutions",
   "version": "1.0.0",
   "scripts": {
