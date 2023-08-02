@@ -14,7 +14,7 @@
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useCtrlPlusKeyEvent } from 'keyhooks';
+import { useCtrlPlusKeyEvent } from 'react-keyshooks';
 
 export default () => {
   const [num, setNum] = useState(0);

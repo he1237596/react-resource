@@ -1,8 +1,16 @@
 {
   "private": false,
-  "name": "keyhooks",
+  "name": "react-keyshooks",
   "description": "This is a custom hook based on React keyboard events, integrating event queue management solutions",
   "version": "1.0.0",
+  "keywords": [
+    "hooks",
+    "khooks",
+    "keyhooks",
+    "keyshooks",
+    "umi hooks",
+    "react hooks"
+  ],
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",

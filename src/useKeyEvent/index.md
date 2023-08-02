@@ -17,7 +17,7 @@
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'keyhooks';
+import { useKeyEvent } from 'react-keyshooks';
 
 export default () => {
   const handleClick = () => {
@@ -37,7 +37,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'keyhooks';
+import { useKeyEvent } from 'react-keyshooks';
 
 export default () => {
   const [num, setNum] = useState(0)
@@ -62,7 +62,7 @@ export default () => {
 - 回调接收默认参数（KeyboardEvent事件对象）
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'keyhooks';
+import { useKeyEvent } from 'react-keyshooks';
 
 export default () => {
   const [num, setNum] = useState(0)
@@ -90,7 +90,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'keyhooks';
+import { useKeyEvent } from 'react-keyshooks';
 
 export default () => {
   const [num, setNum] = useState(0);
@@ -116,7 +116,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'keyhooks';
+import { useKeyEvent } from 'react-keyshooks';
 
 export default () => {
   const [num, setNum] = useState(0);
@@ -140,7 +140,7 @@ freezeAll/unfreezeAll：
 冻结/解冻所有键盘事件队列
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'keyhooks';
+import { useKeyEvent } from 'react-keyshooks';
 
 export default () => {
   const [num, setNum] = useState(0);
