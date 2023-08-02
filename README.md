@@ -5,7 +5,7 @@
  * @LastEditTime: 2023-07-31 15:57:40
  * @Descripttion: **
 -->
-# react-khooks
+# react-keyhooks
 
 ## Getting Started
 
@@ -28,20 +28,20 @@
 ## 📦 Install
 
 ```bash
-$ npm i react-khooks --save
+$ npm i react-keyhooks --save
 ```
 ## 🔨 Usage
 ```jsx
 // 根据需要结构以下对应模块使用
-import { useKeyEvent } from 'react-khooks'; //键盘hooks
-import { useCtrlPlusKeyEvent } from 'react-khooks'; //ctrl+key复合键hooks
-import { emitter } from 'react-khooks'; //事件队列中心（单例）
+import { useKeyEvent } from 'react-keyhooks'; //键盘hooks
+import { useCtrlPlusKeyEvent } from 'react-keyhooks'; //ctrl+key复合键hooks
+import { emitter } from 'react-keyhooks'; //事件队列中心（单例）
 ```
 ## Demo
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-keyhooks';
 
 export default () => {
   const handleClick = () => {
@@ -61,7 +61,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-keyhooks';
 
 export default () => {
   const [num, setNum] = useState(0)
@@ -86,7 +86,7 @@ export default () => {
 - 回调接收默认参数（KeyboardEvent事件对象）
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-keyhooks';
 
 export default () => {
   const [num, setNum] = useState(0)
@@ -114,7 +114,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-keyhooks';
 
 export default () => {
   const [num, setNum] = useState(0);
@@ -140,7 +140,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-keyhooks';
 
 export default () => {
   const [num, setNum] = useState(0);
@@ -164,7 +164,7 @@ freezeAll/unfreezeAll：
 冻结/解冻所有键盘事件队列
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-keyhooks';
 
 export default () => {
   const [num, setNum] = useState(0);
