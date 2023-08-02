@@ -18,9 +18,9 @@ var useKeyboardEvent = function useKeyboardEvent(props) {
       toolEventName: toolEventName
     });
     var lastTime = 0;
+    // 聚焦输入框时，阻止快捷键
     var handleKeyboardEvent = function handleKeyboardEvent(event) {
-      // 聚焦输入框时，阻止快捷键
-      if (event.target.localName === 'input') {
+      if (event.target.localName === 'input' && (!event.target.type || ['number', 'text', 'password'].includes(event.target.type))) {
         return;
       }
       if (event.key === keyName || event.keyCode === keyName) {

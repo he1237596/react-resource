@@ -11,11 +11,11 @@ const useKeyboardEvent = (props) => {
       toolEventName
     });
     let lastTime = 0;
+    const handleKeyboardEvent = (event) => {
       // 聚焦输入框时，阻止快捷键
-      const handleKeyboardEvent = (event) => {
-        if (event.target.localName === 'input' && (!event.target.type || ['number', 'text', 'password'].includes(event.target.type))) {
-          return;
-        }
+      if (event.target.localName === 'input' && (!event.target.type || ['number', 'text', 'password'].includes(event.target.type))) {
+        return;
+      }
       if (event.key === keyName || event.keyCode === keyName) {
         // keydown 防抖
         if (delayType === 1) {
