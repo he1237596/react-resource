@@ -2,7 +2,7 @@
  * @Author: Chris
  * @Date: 2023-07-26 10:44:03
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-31 15:57:40
+ * @LastEditTime: 2023-08-02 15:39:54
  * @Descripttion: **
 -->
 # react-keyshooks
@@ -24,24 +24,9 @@
 - useKeyEvent默认返回事件队列实例，这是一个单例，意味着你在任何地方返回的都是同一个emitter实例或者直接导入，以手动控制事件队列
 - 内置了基于useKeyEvent实现的ctrl+其他键的复合键自定义hooks（useCtrlPlusKeyEvent），你可以直接解构使用
 
-
-## 📦 Install
-
-```bash
-$ npm i react-keyshooks --save
-```
-## 🔨 Usage
-```jsx
-// 根据需要结构以下对应模块使用
-import { useKeyEvent } from 'react-keyshooks'; //键盘hooks
-import { useCtrlPlusKeyEvent } from 'react-keyshooks'; //ctrl+key复合键hooks
-import { emitter } from 'react-keyshooks'; //事件队列中心（单例）
-```
-## Demo
-
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-keyshooks';
+import { useKeyEvent, useCtrlPlusKeyEvent } from 'react-keyshooks';
 
 export default () => {
   const handleClick = () => {
@@ -73,7 +58,7 @@ export default () => {
 
   return (
     <div>
-      <div>按键z增加num</div>
+      <div>按键x增加num</div>
       <button onClick={() => handleClick(1)}>加</button>
       <span>num: {num}</span>
       <button onClick={() => handleClick(-1)}>减</button>
@@ -86,7 +71,7 @@ export default () => {
 - 回调接收默认参数（KeyboardEvent事件对象）
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-keyshooks';
+import { useCtrlPlusKeyEvent } from 'react-keyshooks';
 
 export default () => {
   const [num, setNum] = useState(0)
@@ -97,11 +82,11 @@ export default () => {
     }
   };
 
-  useKeyEvent({ keyName: 'b', callback: handleClick, toolEventName: 'add_3' });
+  useCtrlPlusKeyEvent({ keyName: 'b', callback: handleClick, toolEventName: 'add_3' });
 
   return (
     <div>
-      <div>按键z增加num</div>
+      <div>按键ctrl+b增加num</div>
       <span>num: {num}</span>
     </div>
   );

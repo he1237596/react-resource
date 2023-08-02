@@ -2,7 +2,7 @@
  * @Author: Chris
  * @Date: 2023-07-31 11:35:57
  * @LastEditors: Chris
- * @LastEditTime: 2023-08-02 15:19:39
+ * @LastEditTime: 2023-08-02 15:35:17
  * @Descripttion: **
 -->
 
@@ -10,7 +10,7 @@
 
 用法:
 
-设置快捷键 s 修改 useState 定义的 num 数据（2）:
+设置快捷键 ctrl+n 修改 useState 定义的 num 数据:
 
 ```jsx
 import React, { useState, useCallback } from 'react';

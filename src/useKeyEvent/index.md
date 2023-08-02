@@ -17,7 +17,7 @@
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-keyshooks';
+import { useKeyEvent, useCtrlPlusKeyEvent } from 'react-keyshooks';
 
 export default () => {
   const handleClick = () => {
@@ -49,7 +49,7 @@ export default () => {
 
   return (
     <div>
-      <div>按键z增加num</div>
+      <div>按键x增加num</div>
       <button onClick={() => handleClick(1)}>加</button>
       <span>num: {num}</span>
       <button onClick={() => handleClick(-1)}>减</button>
@@ -62,7 +62,7 @@ export default () => {
 - 回调接收默认参数（KeyboardEvent事件对象）
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-keyshooks';
+import { useCtrlPlusKeyEvent } from 'react-keyshooks';
 
 export default () => {
   const [num, setNum] = useState(0)
@@ -73,11 +73,11 @@ export default () => {
     }
   };
 
-  useKeyEvent({ keyName: 'b', callback: handleClick, toolEventName: 'add_3' });
+  useCtrlPlusKeyEvent({ keyName: 'b', callback: handleClick, toolEventName: 'add_3' });
 
   return (
     <div>
-      <div>按键z增加num</div>
+      <div>按键ctrl+b增加num</div>
       <span>num: {num}</span>
     </div>
   );
