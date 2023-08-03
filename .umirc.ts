@@ -8,7 +8,7 @@
 import { defineConfig } from 'dumi';
 
 export default defineConfig({
-  title: 'khooks',
+  title: 'react-khooks',
   favicon:
     '/ee.jpg',
   logo: '/ee.jpg',

@@ -1,13 +1,12 @@
 {
   "private": false,
-  "name": "react-keyshooks",
+  "name": "react-khooks",
   "description": "This is a custom hook based on React keyboard events, integrating event queue management solutions",
   "version": "1.0.1",
   "keywords": [
     "hooks",
-    "khooks",
-    "keyhooks",
-    "keyshooks",
+    "react-khooks",
+    "keyboard",
     "umi hooks",
     "react hooks"
   ],
@@ -27,9 +26,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/he1237596/react-resource/tree/khooks"
+    "url": "git+https://github.com/he1237596/react-resource/tree/react-khooks"
   },
-  "homepage": "https://github.com/he1237596/react-resource/tree/khooks#readme",
+  "homepage": "https://github.com/he1237596/react-resource/tree/react-khooks#readme",
   "module": "dist/esm/index.js",
   "typings": "dist/esm/index.d.ts",
   "gitHooks": {
