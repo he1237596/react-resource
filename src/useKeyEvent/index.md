@@ -1,6 +1,6 @@
 
 <!-- ## useKeyEvent -->
-这是一个基于React的键盘事件的自定义hooks，是基于公司的业务封装的，支持一个按键绑定多个事件（事件队列管理），只触发最新绑定的事件
+这是一个基于React的键盘事件的自定义hooks，是基于公司的业务封装的，支持一个按键绑定多个事件（事件队列管理），只触发最新绑定的事件，队列顺序根据业务去维护，毕竟正常来说一个按键在某一时刻只会触发单一功能事件。（其实可以通过事件权重去托管给emitter本身去管理）
 |  参数   | 说明  |
 |  ----  | ----  |
 | keyName  | 键盘按键名key或keyCode，建议统一，必传 |
@@ -10,10 +10,12 @@
 | delayTime  | 防抖/节流延迟时间，默认300ms |
 | delayType  | 2：防抖（默认）/1：节流，默认2 |
 
-- 一般来说，你只需要传入三个参数：keyName（键盘按键名），callback（回调函数），toolEventName（自定义事件名）
+- 一般来说，你只需要传入三个属性：keyName（键盘按键名），callback（回调函数），toolEventName（自定义事件名）
 - 你可以基于callback的默认参数KeyboardEvent根据该事件对象进行更多逻辑控制或完成更多复合按键
 - useKeyEvent默认返回事件队列实例，这是一个单例，意味着你在任何地方返回的都是同一个emitter实例或者直接导入，以手动控制事件队列
 - 内置了基于useKeyEvent实现的ctrl+其他键的复合键自定义hooks（useCtrlPlusKeyEvent），你可以直接解构使用
+
+基本用法：
 
 ```jsx
 import React, { useState, useCallback } from 'react';
@@ -33,6 +35,31 @@ export default () => {
   );
 };
 ```
+动态切换绑定热键：
+
+```jsx
+import React, { useState, useCallback } from 'react';
+import { useKeyEvent, useCtrlPlusKeyEvent } from 'react-khooks';
+
+export default () => {
+  const [num, setNum] = useState(0)
+  const [hotKey, setHotKey] = useState('m')
+  const handleClick = () => {
+    console.log(123);
+  };
+
+  useKeyEvent({ keyName: hotKey, callback: handleClick, toolEventName: '修改num' });
+
+  return (
+    <div>
+      <div>按键m键修改num</div>
+      <div>num: {num}</div>
+      <div><button onClick={() => setHotKey('n')}>切换为使用n键修改num</button></div>
+    </div>
+  );
+};
+```
+
 回调传参:
 
 ```jsx
