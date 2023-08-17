@@ -45,7 +45,7 @@ export default () => {
   const [num, setNum] = useState(0)
   const [hotKey, setHotKey] = useState('m')
   const handleClick = () => {
-    console.log(123);
+    setNum(num + 1);
   };
 
   useKeyEvent({ keyName: hotKey, callback: handleClick, toolEventName: '修改num' });
