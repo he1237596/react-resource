@@ -2,7 +2,7 @@
  * @Author: Chris
  * @Date: 2023-07-26 17:59:50
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-31 15:25:31
+ * @LastEditTime: 2023-08-17 18:23:15
  * @Descripttion: **
  */
 import React from 'react';
@@ -15,8 +15,7 @@ const useCtrlCKeyListener = (props) => {
       callback(e)
     }
   }
-  const emitter = useKeyEvent({ type, keyName, callback: cb, toolEventName, delayTime, delayType } )
-  return { emitter }
+  return useKeyEvent({ type, keyName, callback: cb, toolEventName, delayTime, delayType } )
 };
 
 export default useCtrlCKeyListener;
