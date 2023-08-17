@@ -37,6 +37,9 @@ const useKeyboardEvent = (props) => {
     document.removeEventListener(type, handleKeyboardEvent);
     emitter.subscribe(keyName, {
       toolEventName,
+      // 无法拿到最新的state，这是一个正常结论
+      // callback: ref.current,
+      // 这是一行神器代码，可以拿到最新的state状态
       callback: (...args) => {
         ref.current(...args)
       },
