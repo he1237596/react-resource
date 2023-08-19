@@ -3,64 +3,40 @@
 这是一个基于React的键盘事件的自定义hooks，是基于公司的业务封装的，支持一个按键绑定多个事件（事件队列管理），只触发最新绑定的事件，队列顺序根据业务去维护，毕竟正常来说一个按键在某一时刻只会触发单一功能事件。（其实可以通过事件权重去托管给emitter本身去管理）
 |  参数   | 说明  |
 |  ----  | ----  |
-| keyName  | 键盘按键名key或keyCode，建议统一，必传 |
+| keyName  | 键盘按键名key或keyCode，建议统一，必传（组合键使用+连接，如：ctrl+按键名，请注意和浏览器以及系统按键的冲突问题）|
 | callback  | 回调函数，默认参数e为KeyboardEvent事件对象，必传 |
 | toolEventName  | 自定义事件名称，作为该键盘事件队列中的唯一标识，必传 |
 | type  | 键盘弹起或按下（keyup/keydown），默认keyup |
-| delayTime  | 防抖/节流延迟时间，默认300ms |
-| delayType  | 1防抖/2节流，默认2 |
+| delayTime  | 防抖/节流延迟时间，默认0为不使用节流/防抖 （如果使用keydown，建议设置）|
+| delayType  | 1节流/2防抖，默认1 |
 
 - 一般来说，你只需要传入三个属性：keyName（键盘按键名），callback（回调函数），toolEventName（自定义事件名）
 - 你可以基于callback的默认参数KeyboardEvent根据该事件对象进行更多逻辑控制或完成更多复合按键
 - useKeyEvent默认返回事件队列实例，这是一个单例，意味着你在任何地方返回的都是同一个emitter实例或者直接导入，以手动控制事件队列
-- 内置了基于useKeyEvent实现的ctrl+其他键的复合键自定义hooks（useCtrlPlusKeyEvent），你可以直接解构使用
+
 
 基本用法：
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent, useCtrlPlusKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-khooks';
 
 export default () => {
   const handleClick = () => {
-    console.log(123);
+    alert('按键z触发')
   };
 
-  useKeyEvent({ keyName: 'z', callback: handleClick, toolEventName: 'log123' });
+  useKeyEvent({ keyName: 'z', callback: handleClick, toolEventName: 'alert' });
 
   return (
     <div>
-      <div>按键z键输出123</div>
-    </div>
-  );
-};
-```
-动态切换绑定热键：
-
-```jsx
-import React, { useState, useCallback } from 'react';
-import { useKeyEvent, useCtrlPlusKeyEvent } from 'react-khooks';
-
-export default () => {
-  const [num, setNum] = useState(0)
-  const [hotKey, setHotKey] = useState('m')
-  const handleClick = () => {
-    setNum(num + 1);
-  };
-
-  useKeyEvent({ keyName: hotKey, callback: handleClick, toolEventName: '修改num', delayTime: 1000, type: 'keydown' });
-
-  return (
-    <div>
-      <div>按键m键修改num</div>
-      <div>num: {num}</div>
-      <div><button onClick={() => setHotKey('n')}>切换为使用n键修改num</button></div>
+      <div>按键z键弹出提示</div>
     </div>
   );
 };
 ```
 
-组合键（ctrl/alt/shift）:
+组合键（ctrl/alt/shift+按键）:
 - 回调接收默认参数（KeyboardEvent事件对象）
 ```jsx
 import React, { useState, useCallback } from 'react';
@@ -69,25 +45,22 @@ import { useKeyEvent } from 'react-khooks';
 export default () => {
   const [num, setNum] = useState(0)
   const handleClick = (e) => {
-    // console.log(e) // KeyboardEvent
-    if(e.ctrlKey) {
-      setNum(num + 1)
-    }
+    setNum(num + 1)
   };
-  useKeyEvent({ keyName: `alt+n`, callback: handleClick, toolEventName: '增加num', delayTime: 1000, type: 'keydown' });
-  useKeyEvent({ keyName: `ctrl+n`, callback: handleClick, toolEventName: '增加num', delayTime: 1000, type: 'keydown' });
-  useKeyEvent({ keyName: `shift+n`, callback: handleClick, toolEventName: '增加num', delayTime: 1000, type: 'keydown' });
+  useKeyEvent({ keyName: `alt+v`, callback: handleClick, toolEventName: '增加num'});
+  useKeyEvent({ keyName: `ctrl+v`, callback: handleClick, toolEventName: '增加num' });
+  useKeyEvent({ keyName: `shift+v`, callback: handleClick, toolEventName: '增加num' });
 
   return (
     <div>
-      <div>按键ctrl+b增加num</div>
+      <div>按键ctrl/alt/shift+v增加num</div>
       <span>num: {num}</span>
     </div>
   );
 };
 ```
 
-回调传参:
+动态切换绑定热键：
 
 ```jsx
 import React, { useState, useCallback } from 'react';
@@ -95,28 +68,50 @@ import { useKeyEvent } from 'react-khooks';
 
 export default () => {
   const [num, setNum] = useState(0)
-  const handleClick = (param) => {
-    setNum(num + param)
+  const [hotKey, setHotKey] = useState('m')
+  const handleClick = () => {
+    setNum(num + 1);
   };
 
-  useKeyEvent({ keyName: 'x', callback: () => handleClick(1), toolEventName: 'add_2' });
+  useKeyEvent({ keyName: hotKey, callback: handleClick, toolEventName: '修改num' });
 
   return (
     <div>
-      <div>按键x增加num</div>
-      <button onClick={() => handleClick(1)}>加</button>
-      <span>num: {num}</span>
-      <button onClick={() => handleClick(-1)}>减</button>
+      <div>按键{hotKey}键修改num</div>
+      <div>num: {num}</div>
+      <div><button onClick={() => setHotKey('n')}>切换为使用n键修改num</button></div>
     </div>
   );
 };
 ```
 
+节流/防抖
 
+```jsx
+import React, { useState, useCallback } from 'react';
+import { useKeyEvent } from 'react-khooks';
 
-设置快捷键 a 修改 useState 定义的 num 数据（1）:
+export default () => {
+  const [num, setNum] = useState(0)
+  const handleClick = useCallback(() => {
+    setNum(num+1)
+  }, [num]);
+  useKeyEvent({ keyName: 'q', callback: handleClick, toolEventName: '长按q键修改num', delayTime: 500, type: 'keydown', delayType: 1 });
+  useKeyEvent({ keyName: 'w', callback: handleClick, toolEventName: '长按w键修改num', delayTime: 500, type: 'keydown', delayType: 2 });
 
-- useCalback回调无依赖
+  return (
+    <div>
+      <div>节流：长按q键修改num(每500ms触发一次)</div>
+      <div>num: {num}</div>
+      <div>防抖：长按w键修改num(直到抬起触发一次)</div>
+    </div>
+  );
+};
+```
+
+关于回调函数callback的处理强烈建议使用useCallback，避免组件重新渲染时频繁订阅取消
+
+- 使用useCalback内setState获取当前状态
 
 ```jsx
 import React, { useState, useCallback } from 'react';
@@ -133,16 +128,14 @@ export default () => {
 
   return (
     <div>
-      按下键盘a键修改num
+      设置快捷键 a 修改 useState 定义的 num 数据
       <div>num: {num}</div>
     </div>
   );
 };
 ```
 
-设置快捷键 s 修改 useState 定义的 num 数据（2）:
-
-- useCallback回调有依赖
+- useCallback依赖获取当前状态
 
 ```jsx
 import React, { useState, useCallback } from 'react';
@@ -159,8 +152,34 @@ export default () => {
 
   return (
     <div>
-      按下键盘s键修改num
+      设置快捷键 s 修改 useState 定义的 num 数据
       <div>num: {num}</div>
+    </div>
+  );
+};
+```
+
+- 不推荐（会导致组件重新渲染时频繁取消/订阅，性能差，虽然内部做了处理，避免这个问题，但是还是不推荐）
+```jsx
+import React, { useState, useCallback } from 'react';
+import { useKeyEvent } from 'react-khooks';
+
+export default () => {
+  const [num, setNum] = useState(0)
+  const handleClick = (param) => {
+    setNum(num + param)
+  };
+
+  useKeyEvent({ keyName: 'ctrl+x', callback: () => handleClick(1), toolEventName: 'add_2' });
+  useKeyEvent({ keyName: 'shift+x', callback: () => handleClick(-1), toolEventName: 'reduce_2' });
+
+  return (
+    <div>
+      <div>按键ctrl+x增加num</div>
+      <div>按键shift+x减小num</div>
+      <button onClick={() => handleClick(1)}> 加 1 </button>
+      <span>num: {num}</span>
+      <button onClick={() => handleClick(-1)}> 减 1 </button>
     </div>
   );
 };
@@ -184,9 +203,9 @@ export default () => {
   return (
     <div>
       <p>按下键盘f键修改num</p>
-      <span style={{border: '1px solid #ccc'}} onClick={() => emitter.freezeAll()}>冻结</span>
+      <span style={{border: '1px solid #ccc'}} onClick={() => emitter.freezeAll()}>冻 结</span>
       <div>num: {num}</div>
-      <span style={{border: '1px solid #ccc'}} onClick={() => emitter.unfreezeAll()}>解冻</span>
+      <span style={{border: '1px solid #ccc'}} onClick={() => emitter.unfreezeAll()}>解 冻</span>
     </div>
   );
 };

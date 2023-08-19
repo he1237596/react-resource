@@ -3,7 +3,7 @@ import emitter from '../keyEventEmitter';
 import utils from '../utils'
 
 const useKeyboardEvent = (props) => {
-  const { type = 'keyup', keyName: hotKeyName, callback, toolEventName, delayTime = 300, delayType = 2 } = props;
+  const { type = 'keyup', keyName: hotKeyName, callback, toolEventName, delayTime = 0, delayType = 1 } = props;
   const ref = useRef(callback)
   ref.current = callback;
   useEffect(() => {
@@ -21,9 +21,8 @@ const useKeyboardEvent = (props) => {
       if (utils.canPublish(event, combineKeys, keyName)) {
         event.preventDefault();
         // 防抖/节流
-        console.log(delayTime)
         if (delayTime) {
-          if (delayType === 1) {
+          if (delayType === 2) {
             if (timeoutId) {
               clearTimeout(timeoutId)
             }
