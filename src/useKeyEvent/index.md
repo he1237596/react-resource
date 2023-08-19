@@ -8,7 +8,7 @@
 | toolEventName  | 自定义事件名称，作为该键盘事件队列中的唯一标识，必传 |
 | type  | 键盘弹起或按下（keyup/keydown），默认keyup |
 | delayTime  | 防抖/节流延迟时间，默认300ms |
-| delayType  | 2：防抖（默认）/1：节流，默认2 |
+| delayType  | 1防抖/2节流，默认2 |
 
 - 一般来说，你只需要传入三个属性：keyName（键盘按键名），callback（回调函数），toolEventName（自定义事件名）
 - 你可以基于callback的默认参数KeyboardEvent根据该事件对象进行更多逻辑控制或完成更多复合按键
@@ -48,13 +48,40 @@ export default () => {
     setNum(num + 1);
   };
 
-  useKeyEvent({ keyName: hotKey, callback: handleClick, toolEventName: '修改num' });
+  useKeyEvent({ keyName: hotKey, callback: handleClick, toolEventName: '修改num', delayTime: 1000, type: 'keydown' });
 
   return (
     <div>
       <div>按键m键修改num</div>
       <div>num: {num}</div>
       <div><button onClick={() => setHotKey('n')}>切换为使用n键修改num</button></div>
+    </div>
+  );
+};
+```
+
+组合键（ctrl/alt/shift）:
+- 回调接收默认参数（KeyboardEvent事件对象）
+```jsx
+import React, { useState, useCallback } from 'react';
+import { useKeyEvent } from 'react-khooks';
+
+export default () => {
+  const [num, setNum] = useState(0)
+  const handleClick = (e) => {
+    // console.log(e) // KeyboardEvent
+    if(e.ctrlKey) {
+      setNum(num + 1)
+    }
+  };
+  useKeyEvent({ keyName: `alt+n`, callback: handleClick, toolEventName: '增加num', delayTime: 1000, type: 'keydown' });
+  useKeyEvent({ keyName: `ctrl+n`, callback: handleClick, toolEventName: '增加num', delayTime: 1000, type: 'keydown' });
+  useKeyEvent({ keyName: `shift+n`, callback: handleClick, toolEventName: '增加num', delayTime: 1000, type: 'keydown' });
+
+  return (
+    <div>
+      <div>按键ctrl+b增加num</div>
+      <span>num: {num}</span>
     </div>
   );
 };
@@ -85,31 +112,7 @@ export default () => {
 };
 ```
 
-组合键（ctrl+b）:
-- 回调接收默认参数（KeyboardEvent事件对象）
-```jsx
-import React, { useState, useCallback } from 'react';
-import { useCtrlPlusKeyEvent } from 'react-khooks';
 
-export default () => {
-  const [num, setNum] = useState(0)
-  const handleClick = (e) => {
-    // console.log(e) // KeyboardEvent
-    if(e.ctrlKey) {
-      setNum(num + 1)
-    }
-  };
-
-  useCtrlPlusKeyEvent({ keyName: 'b', callback: handleClick, toolEventName: 'add_3' });
-
-  return (
-    <div>
-      <div>按键ctrl+b增加num</div>
-      <span>num: {num}</span>
-    </div>
-  );
-};
-```
 
 设置快捷键 a 修改 useState 定义的 num 数据（1）:
 

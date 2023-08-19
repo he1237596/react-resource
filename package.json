@@ -2,7 +2,7 @@
   "private": false,
   "name": "react-khooks",
   "description": "This is a custom hook based on React keyboard events, integrating event queue management solutions",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "keywords": [
     "hooks",
     "react-khooks",

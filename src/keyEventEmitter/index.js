@@ -97,4 +97,5 @@ class EventEmitter {
   }
 }
 const emitter = new EventEmitter();
+debug && (window._emitter = emitter);
 export default emitter;

@@ -2,7 +2,7 @@
  * @Author: Chris
  * @Date: 2023-07-26 17:59:50
  * @LastEditors: Chris
- * @LastEditTime: 2023-07-31 15:25:31
+ * @LastEditTime: 2023-08-17 18:23:15
  * @Descripttion: **
  */
 import React from 'react';
@@ -22,7 +22,7 @@ var useCtrlCKeyListener = function useCtrlCKeyListener(props) {
       callback(e);
     }
   };
-  var emitter = useKeyEvent({
+  return useKeyEvent({
     type: type,
     keyName: keyName,
     callback: cb,
@@ -30,8 +30,5 @@ var useCtrlCKeyListener = function useCtrlCKeyListener(props) {
     delayTime: delayTime,
     delayType: delayType
   });
-  return {
-    emitter: emitter
-  };
 };
 export default useCtrlCKeyListener;

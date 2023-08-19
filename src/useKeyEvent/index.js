@@ -1,13 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import emitter from '../keyEventEmitter';
+import utils from '../utils'
 
 const useKeyboardEvent = (props) => {
-  const { type = 'keyup', keyName, callback, toolEventName, delayTime = 300, delayType = 2 } = props;
+  const { type = 'keyup', keyName: hotKeyName, callback, toolEventName, delayTime = 300, delayType = 2 } = props;
   const ref = useRef(callback)
   ref.current = callback;
   useEffect(() => {
+    const { keyName, combineKeys } = utils.getKeyInfo(hotKeyName)
     let timeoutId = null;
-    emitter.unsubscribe(keyName, {
+    emitter.unsubscribe(hotKeyName, {
       toolEventName
     });
     let lastTime = 0;
@@ -16,26 +18,33 @@ const useKeyboardEvent = (props) => {
       if (event.target.localName === 'input' && (!event.target.type || ['number', 'text', 'password'].includes(event.target.type))) {
         return;
       }
-      if (event.key === keyName || event.keyCode === keyName) {
-        // keydown 防抖
-        if (delayType === 1) {
-          if (timeoutId) {
-            clearTimeout(timeoutId)
+      if (utils.canPublish(event, combineKeys, keyName)) {
+        event.preventDefault();
+        // 防抖/节流
+        console.log(delayTime)
+        if (delayTime) {
+          if (delayType === 1) {
+            if (timeoutId) {
+              clearTimeout(timeoutId)
+            }
+            timeoutId = setTimeout(() => {
+              emitter.publish(hotKeyName, { toolEventName }, event)
+            }, delayTime);
+          } else {
+            const now = Date.now();
+            if (now - lastTime >= delayTime) {
+              emitter.publish(hotKeyName, { toolEventName }, event)
+              lastTime = now;
+            }
           }
-          timeoutId = setTimeout(() => {
-            emitter.publish(keyName, { toolEventName }, event)
-          }, delayTime);
         } else {
-          const now = Date.now();
-          if (now - lastTime >= delayTime) {
-            emitter.publish(keyName, { toolEventName }, event)
-            lastTime = now;
-          }
+          console.log('ggggg')
+          emitter.publish(hotKeyName, { toolEventName }, event)
         }
       }
     };
     document.removeEventListener(type, handleKeyboardEvent);
-    emitter.subscribe(keyName, {
+    emitter.subscribe(hotKeyName, {
       toolEventName,
       // 无法拿到最新的state，这是一个正常结论
       // callback: ref.current,
@@ -46,13 +55,13 @@ const useKeyboardEvent = (props) => {
     });
     document.addEventListener(type, handleKeyboardEvent);
     return () => {
-      emitter.unsubscribe(keyName, {
+      emitter.unsubscribe(hotKeyName, {
         toolEventName
       });
       document.removeEventListener(type, handleKeyboardEvent);
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [keyName, toolEventName, delayTime, delayType, type]);
+  }, [hotKeyName, toolEventName, delayTime, delayType, type]);
   return { emitter };
 };
 

@@ -2,7 +2,7 @@
  * @Author: Chris
  * @Date: 2023-07-26 10:44:03
  * @LastEditors: Chris
- * @LastEditTime: 2023-08-16 14:52:54
+ * @LastEditTime: 2023-08-19 19:57:55
  * @Descripttion: **
 -->
 # react-khooks
@@ -17,7 +17,7 @@
 | toolEventName  | 自定义事件名称，作为该键盘事件队列中的唯一标识，必传 |
 | type  | 键盘弹起或按下（keyup/keydown），默认keyup |
 | delayTime  | 防抖/节流延迟时间，默认300ms |
-| delayType  | 2：防抖（默认）/1：节流，默认2 |
+| delayType  | 1防抖/2节流，默认2 |
 
 - 一般来说，你只需要传入三个属性：keyName（键盘按键名），callback（回调函数），toolEventName（自定义事件名）
 - 你可以基于callback的默认参数KeyboardEvent根据该事件对象进行更多逻辑控制或完成更多复合按键
