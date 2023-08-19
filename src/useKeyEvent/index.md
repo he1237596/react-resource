@@ -23,7 +23,7 @@ import { useKeyEvent } from 'react-khooks';
 
 export default () => {
   const handleClick = () => {
-    alert('按键z触发')
+    alert('按键z触发');
   };
 
   useKeyEvent({ keyName: 'z', callback: handleClick, toolEventName: 'alert' });
@@ -37,17 +37,19 @@ export default () => {
 ```
 
 组合键（ctrl/alt/shift+按键）:
-- 回调接收默认参数（KeyboardEvent事件对象）
+
+- 回调接收默认参数（KeyboardEvent 事件对象）
+
 ```jsx
 import React, { useState, useCallback } from 'react';
 import { useKeyEvent } from 'react-khooks';
 
 export default () => {
-  const [num, setNum] = useState(0)
+  const [num, setNum] = useState(0);
   const handleClick = (e) => {
-    setNum(num + 1)
+    setNum(num + 1);
   };
-  useKeyEvent({ keyName: `alt+v`, callback: handleClick, toolEventName: '增加num'});
+  useKeyEvent({ keyName: `alt+v`, callback: handleClick, toolEventName: '增加num' });
   useKeyEvent({ keyName: `ctrl+v`, callback: handleClick, toolEventName: '增加num' });
   useKeyEvent({ keyName: `shift+v`, callback: handleClick, toolEventName: '增加num' });
 
@@ -67,8 +69,8 @@ import React, { useState, useCallback } from 'react';
 import { useKeyEvent } from 'react-khooks';
 
 export default () => {
-  const [num, setNum] = useState(0)
-  const [hotKey, setHotKey] = useState('m')
+  const [num, setNum] = useState(0);
+  const [hotKey, setHotKey] = useState('m');
   const handleClick = () => {
     setNum(num + 1);
   };
@@ -79,7 +81,9 @@ export default () => {
     <div>
       <div>按键{hotKey}键修改num</div>
       <div>num: {num}</div>
-      <div><button onClick={() => setHotKey('n')}>切换为使用n键修改num</button></div>
+      <div>
+        <button onClick={() => setHotKey('n')}>切换为使用n键修改num</button>
+      </div>
     </div>
   );
 };
@@ -92,12 +96,26 @@ import React, { useState, useCallback } from 'react';
 import { useKeyEvent } from 'react-khooks';
 
 export default () => {
-  const [num, setNum] = useState(0)
+  const [num, setNum] = useState(0);
   const handleClick = useCallback(() => {
-    setNum(num+1)
+    setNum(num + 1);
   }, [num]);
-  useKeyEvent({ keyName: 'q', callback: handleClick, toolEventName: '长按q键修改num', delayTime: 500, type: 'keydown', delayType: 1 });
-  useKeyEvent({ keyName: 'w', callback: handleClick, toolEventName: '长按w键修改num', delayTime: 500, type: 'keydown', delayType: 2 });
+  useKeyEvent({
+    keyName: 'q',
+    callback: handleClick,
+    toolEventName: '长按q键修改num',
+    delayTime: 500,
+    type: 'keydown',
+    delayType: 1,
+  });
+  useKeyEvent({
+    keyName: 'w',
+    callback: handleClick,
+    toolEventName: '长按w键修改num',
+    delayTime: 500,
+    type: 'keydown',
+    delayType: 2,
+  });
 
   return (
     <div>
@@ -109,9 +127,9 @@ export default () => {
 };
 ```
 
-关于回调函数callback的处理强烈建议使用useCallback，避免组件重新渲染时频繁订阅取消
+关于回调函数 callback 的处理强烈建议使用 useCallback，避免组件重新渲染时频繁订阅取消
 
-- 使用useCalback内setState获取当前状态
+- 使用 useCalback 内 setState 获取当前状态
 
 ```jsx
 import React, { useState, useCallback } from 'react';
@@ -135,7 +153,7 @@ export default () => {
 };
 ```
 
-- useCallback依赖获取当前状态
+- useCallback 依赖获取当前状态
 
 ```jsx
 import React, { useState, useCallback } from 'react';
@@ -160,14 +178,15 @@ export default () => {
 ```
 
 - 不推荐（会导致组件重新渲染时频繁取消/订阅，性能差，虽然内部做了处理，避免这个问题，但是还是不推荐）
+
 ```jsx
 import React, { useState, useCallback } from 'react';
 import { useKeyEvent } from 'react-khooks';
 
 export default () => {
-  const [num, setNum] = useState(0)
+  const [num, setNum] = useState(0);
   const handleClick = (param) => {
-    setNum(num + param)
+    setNum(num + param);
   };
 
   useKeyEvent({ keyName: 'ctrl+x', callback: () => handleClick(1), toolEventName: 'add_2' });
@@ -185,8 +204,8 @@ export default () => {
 };
 ```
 
-freezeAll/unfreezeAll：
-冻结/解冻所有键盘事件队列
+freezeAll/unfreezeAll：冻结/解冻所有键盘事件队列
+
 ```jsx
 import React, { useState, useCallback } from 'react';
 import { useKeyEvent } from 'react-khooks';
@@ -199,13 +218,18 @@ export default () => {
   };
 
   const { emitter } = useKeyEvent({ keyName: 'f', callback: handleClick, toolEventName: 'add' });
+  // 你也可以直接 import { emitter } from 'react-khooks'，因为这里的emitter始终是同一个实例
 
   return (
     <div>
       <p>按下键盘f键修改num</p>
-      <span style={{border: '1px solid #ccc'}} onClick={() => emitter.freezeAll()}>冻 结</span>
+      <span style={{ border: '1px solid #ccc' }} onClick={() => emitter.freezeAll()}>
+        冻 结
+      </span>
       <div>num: {num}</div>
-      <span style={{border: '1px solid #ccc'}} onClick={() => emitter.unfreezeAll()}>解 冻</span>
+      <span style={{ border: '1px solid #ccc' }} onClick={() => emitter.unfreezeAll()}>
+        解 冻
+      </span>
     </div>
   );
 };
