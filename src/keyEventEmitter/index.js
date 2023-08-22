@@ -6,7 +6,7 @@
 //   }
 // }
 
-const debug = process.env.NODE_ENV;
+const debug = process.env.NODE_ENV === 'development';
 class EventEmitter {
   constructor() {
     this.events = new Map(); // 用于存储事件和对应的回调函数队列
