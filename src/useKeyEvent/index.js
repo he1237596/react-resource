@@ -37,7 +37,6 @@ const useKeyboardEvent = (props) => {
             }
           }
         } else {
-          console.log('ggggg')
           emitter.publish(hotKeyName, { toolEventName }, event)
         }
       }
@@ -47,10 +46,13 @@ const useKeyboardEvent = (props) => {
       toolEventName,
       // 无法拿到最新的state，这是一个正常结论
       // callback: ref.current,
-      // 这是一行神器代码，可以拿到最新的state状态
-      callback: (...args) => {
-        ref.current(...args)
-      },
+
+      // 传递ref实例，在队列读取即时的ref.current执行，可以拿到最新的状态
+      // callback: ref,
+
+      // 这是一行神器代码，可以拿到最新的state状态,
+      // 我理解的是每次执行回调的时读取最新的ref.current上下文
+      callback: (...args)=>ref.current(...args),
     });
     document.addEventListener(type, handleKeyboardEvent);
     return () => {

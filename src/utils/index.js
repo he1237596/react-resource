@@ -2,10 +2,10 @@
  * @Author: Chris
  * @Date: 2023-08-19 18:16:14
  * @LastEditors: Chris
- * @LastEditTime: 2023-08-19 20:16:47
+ * @LastEditTime: 2023-08-28 10:20:00
  * @Descripttion: **
  */
-
+const dictKeys = ['ctrl', 'alt', 'shift']
 const getKeyInfo = (eventName) => {
   let keyName = eventName + '';
   let combineKeys = []
@@ -23,10 +23,11 @@ const canPublish = (event, combineKeys, keyName) => {
     return false;
   }
   if (combineKeys.length > 0) {
-    for (let i = 0; i < combineKeys.length; i++) {
-      if (!event[`${combineKeys[i]}Key`]) {
-        return false;
-      }
+    const isAllTrue = combineKeys.every(item => event[`${item}Key`] === true)
+    const otherKeys = dictKeys.filter(item => !combineKeys.includes(item))
+    const isOtherAllfalse = otherKeys.every(item => event[`${item}Key`] === false)
+    if(!isAllTrue || !isOtherAllfalse) {
+      return false;
     }
   } else {
     if (event.ctrlKey || event.altKey || event.shiftKey) {
