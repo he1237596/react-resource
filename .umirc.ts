@@ -11,7 +11,7 @@ export default defineConfig({
   base: root,
   publicPath: root,
   hash: true,
-  title: 'react-khooks',
+  title: 'react-hotkeys-hooks',
   favicon:
     '/ee.jpg',
   logo: '/ee.jpg',

@@ -6,22 +6,22 @@
  * @Descripttion: **
 -->
 
-# react-khooks
+# react-hotkeys-hooks
 
 ## Getting Started
 
 ## 📦 Install
 
 ```bash
-$ npm i react-khooks --save
+$ npm i react-hotkeys-hooks --save
 ```
 
 ## 🔨 Usage
 
 ```jsx
 // 根据需要结构以下对应模块使用
-import { useKeyEvent } from 'react-khooks'; //键盘hooks
-import { emitter } from 'react-khooks'; //事件队列中心（单例）
+import { useKeyEvent } from 'react-hotkeys-hooks'; //键盘hooks
+import { emitter } from 'react-hotkeys-hooks'; //事件队列中心（单例）
 ```
 
 <!-- ## useKeyEvent -->
@@ -45,7 +45,7 @@ import { emitter } from 'react-khooks'; //事件队列中心（单例）
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-hotkeys-hooks';
 
 export default () => {
   const handleClick = () => {
@@ -68,7 +68,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-hotkeys-hooks';
 
 export default () => {
   const [num, setNum] = useState(0);
@@ -92,7 +92,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-hotkeys-hooks';
 
 export default () => {
   const [num, setNum] = useState(0);
@@ -119,7 +119,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-hotkeys-hooks';
 
 export default () => {
   const [num, setNum] = useState(0);
@@ -159,7 +159,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-hotkeys-hooks';
 
 export default () => {
   const [num, setNum] = useState(0);
@@ -183,7 +183,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-hotkeys-hooks';
 
 export default () => {
   const [num, setNum] = useState(0);
@@ -208,7 +208,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-hotkeys-hooks';
 
 export default () => {
   const [num, setNum] = useState(0);
@@ -235,7 +235,7 @@ export default () => {
 
 ```jsx
 import React, { useState, useCallback } from 'react';
-import { useKeyEvent } from 'react-khooks';
+import { useKeyEvent } from 'react-hotkeys-hooks';
 
 export default () => {
   const [num, setNum] = useState(0);
@@ -245,7 +245,7 @@ export default () => {
   };
 
   const { emitter } = useKeyEvent({ keyName: 'f', callback: handleClick, toolEventName: 'add' });
-  // 你也可以直接 import { emitter } from 'react-khooks'，因为这里的emitter始终是同一个实例
+  // 你也可以直接 import { emitter } from 'react-hotkeys-hooks'，因为这里的emitter始终是同一个实例
 
   return (
     <div>
