@@ -6,14 +6,13 @@
  * @Descripttion: **
  */
 import { defineConfig } from 'dumi';
-const root = '/react-resource/'
+const root = '/react-resource/';
 export default defineConfig({
   base: root,
   publicPath: root,
   hash: true,
   title: 'react-khooks',
-  favicon:
-    '/ee.jpg',
+  favicon: '/ee.jpg',
   logo: '/ee.jpg',
   outputPath: 'docs-dist',
   // more config: https://d.umijs.org/config

@@ -21,7 +21,7 @@
 .umi-production
 .umi-test
 .env.local
-
+.dumi
 # ide
 /.vscode
 /.idea
