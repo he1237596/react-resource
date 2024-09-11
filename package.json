@@ -42,8 +42,8 @@
       "prettier --parser=typescript --write"
     ]
   },
-  "dependencies": {
-    "react": "^18.0.0"
+  "peerDependencies": {
+    "react": ">=16.8.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.15.1",
