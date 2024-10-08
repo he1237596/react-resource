@@ -2,7 +2,7 @@
   "private": false,
   "name": "react-khooks",
   "description": "This is a custom hook based on React keyboard events, integrating event queue management solutions",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "keywords": [
     "hooks",
     "react-khooks",
@@ -26,7 +26,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/he1237596/react-resource/tree/khooks"
+    "url": "https://github.com/he1237596/react-resource/tree/khooks"
   },
   "homepage": "https://github.com/he1237596/react-resource/tree/khooks#readme",
   "module": "dist/esm/index.js",
@@ -42,8 +42,9 @@
       "prettier --parser=typescript --write"
     ]
   },
-  "dependencies": {
-    "react": "^18.0.0"
+  "dependencies": {},
+  "peerDependencies": {
+    "react": ">=16.8.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.15.1",
