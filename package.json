@@ -4,10 +4,10 @@
   "description": "This is a custom hook based on React keyboard events, integrating event queue management solutions",
   "version": "1.2.3",
   "keywords": [
-    "hooks",
-    "react-khooks",
+    "react-hotkey",
+    "react-keyhooks",
     "keyboard",
-    "umi hooks",
+    "hot keyboard",
     "react hooks"
   ],
   "scripts": {
