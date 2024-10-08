@@ -28,7 +28,7 @@
     "type": "git",
     "url": "https://github.com/he1237596/react-resource/tree/khooks"
   },
-  "homepage": "https://github.com/he1237596/react-resource/tree/khooks#readme",
+  "homepage": "https://he1237596.github.io/react-resource/use-key-event",
   "module": "dist/esm/index.js",
   "typings": "dist/esm/index.d.ts",
   "gitHooks": {
