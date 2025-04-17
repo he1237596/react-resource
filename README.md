@@ -1,124 +1,111 @@
-<!--
- * @Author: Chris
- * @Date: 2023-07-26 10:44:03
- * @LastEditors: Chris
- * @LastEditTime: 2023-08-28 10:19:03
- * @Descripttion: **
--->
-
 # react-khooks
+
+Welcome to the project documentation. You can click the link below to switch to the Chinese version.
+
+> 📖 [中文 README.md](./README.zh-CN.md)
 
 ## Getting Started
 
 ## 📦 Install
 
 ```bash
-$ npm i react-khooks --save
+npm i react-khooks --save
 ```
 
 ## 🔨 Usage
 
 ```jsx
-// 根据需要结构以下对应模块使用
-import { useKeyEvent } from 'react-khooks'; //键盘hooks
-import { emitter } from 'react-khooks'; //事件队列中心（单例）
+// Import what you need
+import { useKeyEvent } from 'react-khooks'; // Keyboard hook
+import { emitter } from 'react-khooks'; // Global event queue instance
 ```
 
-<!-- ## useKeyEvent -->
+## 🔑 useKeyEvent
 
-这是一个基于React的键盘事件的自定义hooks，是基于公司的业务封装的，支持一个按键绑定多个事件（事件队列管理），只触发最新绑定的事件，队列顺序根据业务去维护，毕竟正常来说一个按键在某一时刻只会触发单一功能事件。（其实可以通过事件权重去托管给emitter本身去管理）
+A custom React hook for keyboard events, mainly used in internal projects. It supports multiple listeners for the same key combination, but only the most recently added listener will be triggered. You can use this mechanism to implement a queue system for your business logic. Alternatively, you can use emitter to handle event priority.
 
-tips: 已重构为ts（菜鸡）版本，欢迎star和issue
+Note: Written in beginner-level TypeScript. PRs and issues are welcome!
 
-| 参数 | 说明 |
+| Parameter | Description |
 | --- | --- |
-| keyName | 键盘按键名key或keyCode，建议统一，必传（组合键使用+连接，如：ctrl+按键名，请注意和浏览器以及系统按键的冲突问题） |
-| callback | 回调函数，默认参数e为KeyboardEvent事件对象，必传 |
-| toolEventName | 自定义事件名称，作为该键盘事件队列中的唯一标识，必传 |
-| type | 键盘弹起或按下（keyup/keydown），默认keyup |
-| delayTime | 防抖/节流延迟时间，默认0为不使用节流/防抖 （如果使用keydown，建议设置） |
-| delayType | 1节流/2防抖，默认1 |
+| `keyName` | Keyboard key name or keyCode. Required. For combo keys, use `+`to connect (e.g.,`ctrl+z`). Be mindful of system/browser conflicts. |
+| `callback` | Callback function. Receives `KeyboardEvent`as default parameter. Required. |
+| `toolEventName` | Custom event name, serves as the unique identifier in the queue. Required. |
+| `type` | Trigger on `keyup`or `keydown`. Default:`keyup`. |
+| `delayTime` | Throttle/debounce delay in ms.`0`means disabled. Recommended for `keydown`. |
+| `delayType` | `1`for throttle,`2`for debounce. Default:`1`. |
 
-- 一般来说，你只需要传入三个属性：keyName（键盘按键名），callback（回调函数），toolEventName（自定义事件名）
-- 支持**复合键+按键**和\*\*复合键+复合键+按键的组合按键事件 (复合键是指ctrl/alt/shift)
-- 你可以基于callback的默认参数KeyboardEvent根据该事件对象进行更多逻辑控制或完成更多复合按键
-- useKeyEvent默认返回事件队列实例，这是一个单例，意味着你在任何地方返回的都是同一个emitter实例或者直接导入，以手动控制事件队列
+Supports combinations like ctrl+alt+shift+key.
 
-> 基本用法：
+You can use the passed-in event object for more logic.
+
+useKeyEvent returns the global emitter, which can also be imported directly for advanced use.
+
+> ✅ Basic Example
 
 ```jsx
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import { useKeyEvent } from 'react-khooks';
 
 export default () => {
   const handleClick = () => {
-    alert('按键z触发');
+    alert('Pressed Z');
   };
 
   useKeyEvent({ keyName: 'z', callback: handleClick, toolEventName: 'alert' });
 
-  return (
-    <div>
-      <div>按键z键弹出提示</div>
-    </div>
-  );
+  return <div>Press Z to show alert</div>;
 };
 ```
 
-> 组合键（ctrl/alt/shift+按键）:
-
-- 回调接收默认参数（KeyboardEvent 事件对象）
+> 💡 Modifier Keys (ctrl/alt/shift + key)
 
 ```jsx
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useKeyEvent } from 'react-khooks';
 
 export default () => {
   const [num, setNum] = useState(0);
-  const handleClick = (e) => {
-    setNum(num + 1);
-  };
-  useKeyEvent({ keyName: `alt+v`, callback: handleClick, toolEventName: '增加num' });
-  useKeyEvent({ keyName: `ctrl+v`, callback: handleClick, toolEventName: '增加num' });
-  useKeyEvent({ keyName: `shift+v`, callback: handleClick, toolEventName: '增加num' });
+  const handleClick = () => setNum(num + 1);
+
+  useKeyEvent({ keyName: 'alt+v', callback: handleClick, toolEventName: 'inc_alt' });
+  useKeyEvent({ keyName: 'ctrl+v', callback: handleClick, toolEventName: 'inc_ctrl' });
+  useKeyEvent({ keyName: 'shift+v', callback: handleClick, toolEventName: 'inc_shift' });
 
   return (
     <div>
-      <div>按键ctrl/alt/shift+v增加num</div>
-      <span>num: {num}</span>
+      Press ctrl/alt/shift + v to increase count
+      <div>Count: {num}</div>
     </div>
   );
 };
 ```
 
-> 动态切换绑定热键：
+> 🔁 Dynamic Hotkey Change
 
 ```jsx
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useKeyEvent } from 'react-khooks';
 
 export default () => {
   const [num, setNum] = useState(0);
   const [hotKey, setHotKey] = useState('m');
-  const handleClick = () => {
-    setNum(num + 1);
-  };
 
-  useKeyEvent({ keyName: hotKey, callback: handleClick, toolEventName: '修改num' });
+  const handleClick = () => setNum(num + 1);
+
+  useKeyEvent({ keyName: hotKey, callback: handleClick, toolEventName: 'dynamic_key' });
 
   return (
     <div>
-      <div>按键{hotKey}键修改num</div>
-      <div>num: {num}</div>
-      <div>
-        <button onClick={() => setHotKey('n')}>切换为使用n键修改num</button>
-      </div>
+      Press {hotKey} to increase count
+      <div>Count: {num}</div>
+      <button onClick={() => setHotKey('n')}>Switch to "n"</button>
     </div>
   );
 };
 ```
 
-> 节流/防抖
+> 🌀 Throttle / Debounce
 
 ```jsx
 import React, { useState, useCallback } from 'react';
@@ -126,21 +113,21 @@ import { useKeyEvent } from 'react-khooks';
 
 export default () => {
   const [num, setNum] = useState(0);
-  const handleClick = useCallback(() => {
-    setNum(num + 1);
-  }, [num]);
+  const handleClick = useCallback(() => setNum(num + 1), [num]);
+
   useKeyEvent({
     keyName: 'q',
     callback: handleClick,
-    toolEventName: '长按q键修改num',
+    toolEventName: 'throttle_q',
     delayTime: 500,
     type: 'keydown',
     delayType: 1,
   });
+
   useKeyEvent({
     keyName: 'w',
     callback: handleClick,
-    toolEventName: '长按w键修改num',
+    toolEventName: 'debounce_w',
     delayTime: 500,
     type: 'keydown',
     delayType: 2,
@@ -148,17 +135,19 @@ export default () => {
 
   return (
     <div>
-      <div>节流：长按q键修改num(每500ms触发一次)</div>
-      <div>num: {num}</div>
-      <div>防抖：长按w键修改num(直到抬起触发一次)</div>
+      <p>Throttle: Hold "q" (fires every 500ms)</p>
+      <p>Debounce: Hold "w" (fires after 500ms release)</p>
+      <div>Count: {num}</div>
     </div>
   );
 };
 ```
 
-> 关于回调函数 callback 的处理强烈建议使用 useCallback，避免组件重新渲染时频繁订阅取消
+## Recommended Usage of `useCallback` with `useKeyEvent`
 
-- 使用 useCalback 内 setState 获取当前状态
+> ⚠️ It is **strongly recommended** to wrap your callback functions with `useCallback` to avoid frequent subscription/unsubscription when the component re-renders.
+
+### ✅ Recommended: Use `useCallback` with functional `setState`
 
 ```jsx
 import React, { useState, useCallback } from 'react';
@@ -175,14 +164,14 @@ export default () => {
 
   return (
     <div>
-      设置快捷键 a 修改 useState 定义的 num 数据
+      Press 'a' to update the `num` state defined via `useState`
       <div>num: {num}</div>
     </div>
   );
 };
 ```
 
-- useCallback 依赖获取当前状态
+### ✅ Recommended: Use useCallback with dependencies
 
 ```jsx
 import React, { useState, useCallback } from 'react';
@@ -199,18 +188,19 @@ export default () => {
 
   return (
     <div>
-      设置快捷键 s 修改 useState 定义的 num 数据
+      Press 's' to update the `num` state defined via `useState`
       <div>num: {num}</div>
     </div>
   );
 };
 ```
 
-- ~~不推荐（会导致组件重新渲染时频繁取消/订阅，性能差，虽然内部做了处理，避免这个问题，但是还是不推荐）~~
-- 目前做了优化，组件重新渲染时不会频繁取消/订阅（虽然好像可以在回调中拿到最新的state，但还是推荐使用前门两种方式获取state）
+⚠️ Not Recommended: Using inline or re-created callbacks This approach was previously discouraged due to performance concerns—frequent unsubscribe/subscribe on every render.
+
+✅ Now optimized: Re-renders no longer cause frequent subscribe/unsubscribe. 🔁 However, it's still recommended to use the previous two approaches for maintaining up-to-date state.
 
 ```jsx
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useKeyEvent } from 'react-khooks';
 
 export default () => {
@@ -224,43 +214,43 @@ export default () => {
 
   return (
     <div>
-      <div>按键ctrl+x增加num</div>
-      <div>按键shift+x减小num</div>
-      <button onClick={() => handleClick(1)}> 加 1 </button>
+      <div>Press ctrl+x to increase num</div>
+      <div>Press shift+x to decrease num</div>
+      <button onClick={() => handleClick(1)}> +1 </button>
       <span>num: {num}</span>
-      <button onClick={() => handleClick(-1)}> 减 1 </button>
+      <button onClick={() => handleClick(-1)}> -1 </button>
     </div>
   );
 };
 ```
 
-> freezeAll/unfreezeAll：冻结/解冻所有键盘事件队列
+> ❄️ Freeze / Unfreeze All Events
 
 ```jsx
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useKeyEvent } from 'react-khooks';
 
 export default () => {
   const [num, setNum] = useState(0);
-
-  const handleClick = () => {
-    setNum((num) => num + 1);
-  };
+  const handleClick = () => setNum((prev) => prev + 1);
 
   const { emitter } = useKeyEvent({ keyName: 'f', callback: handleClick, toolEventName: 'add' });
-  // 你也可以直接 import { emitter } from 'react-khooks'，因为这里的emitter始终是同一个实例
 
   return (
     <div>
-      <p>按下键盘f键修改num</p>
-      <span style={{ border: '1px solid #ccc' }} onClick={() => emitter.freezeAll()}>
-        冻 结
-      </span>
-      <div>num: {num}</div>
-      <span style={{ border: '1px solid #ccc' }} onClick={() => emitter.unfreezeAll()}>
-        解 冻
-      </span>
+      Press "f" to increase count
+      <div onClick={() => emitter.freezeAll()}>Freeze</div>
+      <div onClick={() => emitter.unfreezeAll()}>Unfreeze</div>
+      <div>Count: {num}</div>
     </div>
   );
 };
 ```
+
+<!-- github链接 -->
+
+[![GitHub link](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/he1237596/react-resource/tree/khooks)
+
+<!-- npm链接 -->
+
+[![npm link](https://img.shields.io/badge/NPM-000000?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/package/react-khooks)

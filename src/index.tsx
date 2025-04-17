@@ -7,5 +7,4 @@
  */
 export { default as useKeyEvent } from './useKeyEvent';
 export { default as keyEventEmitter } from './keyEventEmitter';
-export { default as useCtrlPlusKeyEvent } from './useCtrlPlusKeyEvent';
 export { default as utils } from './utils';
