@@ -2,7 +2,7 @@
 
 欢迎查看我们的项目文档，您可以点击下面的链接切换到英文版。
 
-> 📖 [English README.zh-CN.md](./README.md)
+> 📖 中文 | [English](./README.md)
 
 ## Getting Started
 

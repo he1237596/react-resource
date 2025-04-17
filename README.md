@@ -2,7 +2,7 @@
 
 Welcome to the project documentation. You can click the link below to switch to the Chinese version.
 
-> 📖 [中文 README.md](./README.zh-CN.md)
+> 📖 [中文](./README.zh-CN.md) | English
 
 ## Getting Started
 
